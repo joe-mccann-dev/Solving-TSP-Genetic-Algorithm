@@ -4,7 +4,7 @@ public class Graph {
     // edgeObject => edgeObject.getWeight()
     private HashMap<Edge, Integer> graph;
 
-    Graph() {
-
+    Graph(HashMap<Edge, Integer> graph) {
+        this.graph = graph;
     }
 }
