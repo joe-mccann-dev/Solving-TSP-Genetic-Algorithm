@@ -7,4 +7,8 @@ public class Graph {
     Graph(HashMap<Edge, Integer> graph) {
         this.graph = graph;
     }
+
+    public void addEdge(Edge edge) {
+        graph.put(edge, edge.getWeight());
+    }
 }
