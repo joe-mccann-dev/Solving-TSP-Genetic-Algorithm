@@ -77,7 +77,11 @@ public class App {
 
         // Initialize GeneticAlgorithm
         GeneticAlgorithm ga_TSP = new GeneticAlgorithm(graph, 100, 7, 0.1f);
+        ga_TSP.setStartNode("A");
         ga_TSP.perform();
+
+        System.out
+                .println("Path cost first perm: " + graph.getPathCost(Arrays.asList(A, G, H, I, J, C, F, E, D, B, A)));
 
         // output a text file indicating shortest path
         // Ex:

@@ -7,6 +7,7 @@ import java.util.Queue;
 public class Graph {
     // Node => [Edge1, Edge2, Edge3 . . ., EdgeN]
     private HashMap<Node, List<Edge>> graph;
+    private Node startNode;
 
     Graph() {
         this.graph = new HashMap<>();
@@ -39,6 +40,26 @@ public class Graph {
         return new ArrayList<>(graph.keySet());
     }
 
+    public Node getNodeByName(String name) {
+        List<Node> nodes = this.getNodes();
+        for (Node node : nodes) {
+            if (node.name.equals(name)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public List<Node> getAllNodesExcept(Node node) {
+        List<Node> result = new ArrayList<>();
+        for (Node n : this.getNodes()) {
+            if (!n.equals(node)) {
+                result.add(n);
+            }
+        }
+        return result;
+    }
+
     // Python example uses a String but I setup using node objects, so I process
     // them in a queue
     public int getPathCost(List<Node> nodes) {
@@ -68,4 +89,5 @@ public class Graph {
         }
         return null;
     }
+
 }
