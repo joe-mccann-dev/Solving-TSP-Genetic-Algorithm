@@ -28,6 +28,14 @@ public class Edge {
         return this.weight;
     }
 
+    public Node getSource() {
+        return this.src;
+    }
+
+    public Node getDest() {
+        return this.dest;
+    }
+
     // for keys of graph, make A_to_B interpreted the same as B_to_A
     @Override
     public boolean equals(Object object) {
@@ -41,7 +49,7 @@ public class Edge {
                 (Objects.equals(this.src, edge.dest) && Objects.equals(this.dest, edge.src));
     }
 
-    // override hashCode so that HashMap views hashCodes as identical
+    // override hashCode so that HashMap views shared edge hashCodes as identical
     @Override
     public int hashCode() {
         return Objects.hash(this.src, this.dest) + Objects.hash(this.dest, this.src);

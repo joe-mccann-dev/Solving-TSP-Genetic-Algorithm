@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -20,59 +22,54 @@ public class App {
         // Add edges, weights calculated internally in Edge class
         // Objects.equals and Objects.hashCode overridden to ensure bidirectionality
         // A
-        Edge A_to_B = new Edge(A, B);
-        Edge A_to_C = new Edge(A, C);
-        Edge A_to_D = new Edge(A, D);
-        Edge A_to_E = new Edge(A, E);
-        Edge A_to_F = new Edge(A, F);
-        Edge A_to_G = new Edge(A, G);
-        Edge A_to_H = new Edge(A, H);
-        Edge A_to_I = new Edge(A, I);
-        Edge A_to_J = new Edge(A, J);
-        // B
-        Edge B_to_C = new Edge(B, C);
-        Edge B_to_D = new Edge(B, D);
-        Edge B_to_E = new Edge(B, E);
-        Edge B_to_F = new Edge(B, F);
-        Edge B_to_G = new Edge(B, G);
-        Edge B_to_H = new Edge(B, H);
-        Edge B_to_I = new Edge(B, I);
-        Edge B_to_J = new Edge(B, J);
-        // C
-        Edge C_to_D = new Edge(C, D);
-        Edge C_to_E = new Edge(C, E);
-        Edge C_to_F = new Edge(C, F);
-        Edge C_to_G = new Edge(C, G);
-        Edge C_to_H = new Edge(C, H);
-        Edge C_to_I = new Edge(C, I);
-        Edge C_to_J = new Edge(C, J);
-        // D
-        Edge D_to_E = new Edge(D, E);
-        Edge D_to_F = new Edge(D, F);
-        Edge D_to_G = new Edge(D, G);
-        Edge D_to_H = new Edge(D, H);
-        Edge D_to_I = new Edge(D, I);
-        Edge D_to_J = new Edge(D, J);
-        // E
-        Edge E_to_F = new Edge(E, F);
-        Edge E_to_G = new Edge(E, G);
-        Edge E_to_H = new Edge(E, H);
-        Edge E_to_I = new Edge(E, I);
-        Edge E_to_J = new Edge(E, J);
-        // F
-        Edge F_to_G = new Edge(F, G);
-        Edge F_to_H = new Edge(F, H);
-        Edge F_to_I = new Edge(F, I);
-        Edge F_to_J = new Edge(F, J);
-        // G
-        Edge G_to_H = new Edge(G, H);
-        Edge G_to_I = new Edge(G, I);
-        Edge G_to_J = new Edge(G, J);
-        // H
-        Edge H_to_I = new Edge(H, I);
-        Edge H_to_J = new Edge(H, J);
-        // I
-        Edge I_to_J = new Edge(I, J);
+        List<Edge> edges = Arrays.asList(
+                new Edge(A, B),
+                new Edge(A, C),
+                new Edge(A, D),
+                new Edge(A, E),
+                new Edge(A, G),
+                new Edge(A, H),
+                new Edge(A, I),
+                new Edge(A, J),
+                new Edge(B, C),
+                new Edge(B, D),
+                new Edge(B, E),
+                new Edge(B, F),
+                new Edge(B, G),
+                new Edge(B, H),
+                new Edge(B, I),
+                new Edge(B, J),
+                new Edge(C, D),
+                new Edge(C, E),
+                new Edge(C, F),
+                new Edge(C, G),
+                new Edge(C, H),
+                new Edge(C, I),
+                new Edge(C, J),
+                new Edge(D, E),
+                new Edge(D, F),
+                new Edge(D, G),
+                new Edge(D, H),
+                new Edge(D, I),
+                new Edge(D, J),
+                new Edge(E, F),
+                new Edge(E, G),
+                new Edge(E, H),
+                new Edge(E, I),
+                new Edge(E, J),
+                new Edge(F, G),
+                new Edge(F, H),
+                new Edge(F, I),
+                new Edge(F, J),
+                new Edge(G, H),
+                new Edge(G, I),
+                new Edge(G, J),
+                new Edge(H, J),
+                new Edge(I, J));
+
+        for (Edge edge : edges) {
+            graph.addEdge(edge);
+        }
 
         // Add edge weights to graph
         // Initialize GeneticAlgorithm as gaTSP,

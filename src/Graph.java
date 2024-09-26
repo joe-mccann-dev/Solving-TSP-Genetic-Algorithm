@@ -9,6 +9,10 @@ public class Graph {
     }
 
     public void addEdge(Edge edge) {
-        graph.put(edge, edge.getWeight());
+        if (!graph.containsKey(edge)) {
+            graph.put(edge, edge.getWeight());
+        } else {
+            System.out.println("Edge from " + edge.getSource() + " to " + edge.getDest() + " already exists.");
+        }
     }
 }
