@@ -10,6 +10,16 @@ public class Graph {
         this.graph = new HashMap<>();
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        List<Node> nodes = new ArrayList<>(this.graph.keySet());
+        for (Node node : nodes) {
+            System.out.println("\nNode " + node + ": " + this.getEdges(node));
+        }
+
+        return sb.toString();
+    }
+
     public void addEdge(Node src, Node dest) {
         Edge edge1 = new Edge(src, dest);
         graph.computeIfAbsent(src, key -> new ArrayList<>()).add(edge1);

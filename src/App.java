@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.List;
-
 public class App {
     public static void main(String[] args) throws Exception {
         // Initialize Graph graph
@@ -64,10 +61,7 @@ public class App {
         graph.addEdge(H, J);
         graph.addEdge(I, J);
 
-        List<Node> nodes = Arrays.asList(A, B, C, D, E, F, G, H, I, J);
-        for (Node node : nodes) {
-            System.out.println("\nNode " + node + ": " + graph.getEdges(node));
-        }
+        System.out.println(graph);
 
         // Initialize GeneticAlgorithm as gaTSP,
         // Find optimal path and path cost by calling gaTSP.exec();
