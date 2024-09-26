@@ -1,11 +1,10 @@
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
         // Initialize Graph graph
-        Graph graph = new Graph(new HashMap<>());
+        Graph graph = new Graph();
 
         // Create Node objects with given x and y coordinates
         Node A = new Node(100, 300, "A");
@@ -20,61 +19,56 @@ public class App {
         Node J = new Node(270, 350, "J");
 
         // Add edges, weights calculated internally in Edge class
-        // Objects.equals and Objects.hashCode overridden to ensure bidirectionality
-        // A
-        List<Edge> edges = Arrays.asList(
-                new Edge(A, B),
-                new Edge(A, C),
-                new Edge(A, D),
-                new Edge(A, E),
-                new Edge(A, G),
-                new Edge(A, H),
-                new Edge(A, I),
-                new Edge(A, J),
-                new Edge(B, C),
-                new Edge(B, D),
-                new Edge(B, E),
-                new Edge(B, F),
-                new Edge(B, G),
-                new Edge(B, H),
-                new Edge(B, I),
-                new Edge(B, J),
-                new Edge(C, D),
-                new Edge(C, E),
-                new Edge(C, F),
-                new Edge(C, G),
-                new Edge(C, H),
-                new Edge(C, I),
-                new Edge(C, J),
-                new Edge(D, E),
-                new Edge(D, F),
-                new Edge(D, G),
-                new Edge(D, H),
-                new Edge(D, I),
-                new Edge(D, J),
-                new Edge(E, F),
-                new Edge(E, G),
-                new Edge(E, H),
-                new Edge(E, I),
-                new Edge(E, J),
-                new Edge(F, G),
-                new Edge(F, H),
-                new Edge(F, I),
-                new Edge(F, J),
-                new Edge(G, H),
-                new Edge(G, I),
-                new Edge(G, J),
-                new Edge(H, J),
-                new Edge(I, J));
+        // bidirectional edge handled in Graph#addEdge
+        graph.addEdge(A, B);
+        graph.addEdge(A, C);
+        graph.addEdge(A, D);
+        graph.addEdge(A, E);
+        graph.addEdge(A, G);
+        graph.addEdge(A, H);
+        graph.addEdge(A, I);
+        graph.addEdge(A, J);
+        graph.addEdge(B, C);
+        graph.addEdge(B, D);
+        graph.addEdge(B, E);
+        graph.addEdge(B, F);
+        graph.addEdge(B, G);
+        graph.addEdge(B, H);
+        graph.addEdge(B, I);
+        graph.addEdge(B, J);
+        graph.addEdge(C, D);
+        graph.addEdge(C, E);
+        graph.addEdge(C, F);
+        graph.addEdge(C, G);
+        graph.addEdge(C, H);
+        graph.addEdge(C, I);
+        graph.addEdge(C, J);
+        graph.addEdge(D, E);
+        graph.addEdge(D, F);
+        graph.addEdge(D, G);
+        graph.addEdge(D, H);
+        graph.addEdge(D, I);
+        graph.addEdge(D, J);
+        graph.addEdge(E, F);
+        graph.addEdge(E, G);
+        graph.addEdge(E, H);
+        graph.addEdge(E, I);
+        graph.addEdge(E, J);
+        graph.addEdge(F, G);
+        graph.addEdge(F, H);
+        graph.addEdge(F, I);
+        graph.addEdge(F, J);
+        graph.addEdge(G, H);
+        graph.addEdge(G, I);
+        graph.addEdge(G, J);
+        graph.addEdge(H, J);
+        graph.addEdge(I, J);
 
-        for (Edge edge : edges) {
-            graph.addEdge(edge);
+        List<Node> nodes = Arrays.asList(A, B, C, D, E, F, G, H, I, J);
+        for (Node node : nodes) {
+            System.out.println("\nNode " + node + ": " + graph.getEdges(node));
         }
 
-        System.out.println(graph.getGraphEdges());
-        System.out.println(graph.getGraphEdge(new Edge(B, A)));
-
-        // Add edge weights to graph
         // Initialize GeneticAlgorithm as gaTSP,
         // Find optimal path and path cost by calling gaTSP.exec();
 

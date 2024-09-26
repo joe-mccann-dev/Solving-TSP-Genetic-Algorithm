@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class Edge {
 
     private Node src;
@@ -12,13 +10,16 @@ public class Edge {
         setEdgeWeight(src, dest);
     }
 
+    Edge(Node src, Node dest, int weight) {
+        this.src = src;
+        this.dest = dest;
+        this.weight = weight;
+    }
+
     public String toString() {
-        String result = "\n";
-        result += "Src: " + this.src + "\n";
-        result += "Dest: " + this.dest + "\n";
-        result += "Weight: " + this.weight;
-        result += "\n----------------------";
-        return result;
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("\n%s -> %s: %d\n", this.src, this.dest, this.weight));
+        return sb.toString();
     }
 
     private void setEdgeWeight(Node node1, Node node2) {
@@ -43,24 +44,5 @@ public class Edge {
 
     public Node getDest() {
         return this.dest;
-    }
-
-    // for keys of graph, make A_to_B interpreted the same as B_to_A
-    @Override
-    public boolean equals(Object object) {
-        if (this == object)
-            return true;
-        if (object == null || getClass() != object.getClass())
-            return false;
-
-        Edge edge = (Edge) object;
-        return (Objects.equals(this.src, edge.src) && Objects.equals(this.dest, edge.dest)) ||
-                (Objects.equals(this.src, edge.dest) && Objects.equals(this.dest, edge.src));
-    }
-
-    // override hashCode so that HashMap views shared edge hashCodes as identical
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.src, this.dest) + Objects.hash(this.dest, this.src);
     }
 }
