@@ -71,6 +71,9 @@ public class App {
             graph.addEdge(edge);
         }
 
+        System.out.println(graph.getGraphEdges());
+        System.out.println(graph.getGraphEdge(new Edge(B, A)));
+
         // Add edge weights to graph
         // Initialize GeneticAlgorithm as gaTSP,
         // Find optimal path and path cost by calling gaTSP.exec();

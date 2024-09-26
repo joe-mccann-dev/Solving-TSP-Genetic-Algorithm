@@ -12,6 +12,15 @@ public class Edge {
         setEdgeWeight(src, dest);
     }
 
+    public String toString() {
+        String result = "\n";
+        result += "Src: " + this.src + "\n";
+        result += "Dest: " + this.dest + "\n";
+        result += "Weight: " + this.weight;
+        result += "\n----------------------";
+        return result;
+    }
+
     private void setEdgeWeight(Node node1, Node node2) {
         this.weight = calculateEdgeWeight(node1, node2);
     }

@@ -10,4 +10,8 @@ public class Node {
         this.y = y;
     }
 
+    public String toString() {
+        return this.name;
+    }
+
 }

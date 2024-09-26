@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Graph {
     // edgeObject => edgeObject.getWeight()
@@ -14,5 +16,15 @@ public class Graph {
         } else {
             System.out.println("Edge from " + edge.getSource() + " to " + edge.getDest() + " already exists.");
         }
+    }
+
+    public Integer getGraphEdge(Edge edge) {
+        return graph.get(edge);
+    }
+
+    public List<Edge> getGraphEdges() {
+        List<Edge> result = new ArrayList<>(graph.keySet());
+
+        return result;
     }
 }
