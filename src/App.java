@@ -23,6 +23,7 @@ public class App {
         graph.addEdge(A, C);
         graph.addEdge(A, D);
         graph.addEdge(A, E);
+        graph.addEdge(A, F);
         graph.addEdge(A, G);
         graph.addEdge(A, H);
         graph.addEdge(A, I);
@@ -70,7 +71,9 @@ public class App {
         System.out.println("Path cost forwards: " + pathCost);
 
         pathCost = graph.getPathCost(Arrays.asList(J, I, H, G, F, E, D, C, B, A));
-        System.out.println("Path cost reverse: " + pathCost);
+        System.out.println("Path cost backwards: " + pathCost);
+
+        System.out.println(graph.getNodes());
 
         // Initialize GeneticAlgorithm
         GeneticAlgorithm ga_TSP = new GeneticAlgorithm(graph, 100, 7, 0.1f);

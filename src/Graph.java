@@ -35,6 +35,10 @@ public class Graph {
         return graph.getOrDefault(node, new ArrayList<>());
     }
 
+    public List<Node> getNodes() {
+        return new ArrayList<>(graph.keySet());
+    }
+
     // Python example uses a String but I setup using node objects, so I process
     // them in a queue
     public int getPathCost(List<Node> nodes) {
