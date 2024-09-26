@@ -47,8 +47,10 @@ public class Graph {
             List<Edge> nodeEdges = this.getEdges(currentNode);
             Edge edge = findEdge(nodeEdges, nextNode);
             if (edge != null) {
+                System.out.println("Edge from " + currentNode + " to " + nextNode + " has weight: " + edge.getWeight());
                 pathCost += edge.getWeight();
             }
+            currentNode = nextNode;
         }
 
         return pathCost;
