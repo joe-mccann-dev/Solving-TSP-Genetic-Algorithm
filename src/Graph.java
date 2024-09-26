@@ -7,7 +7,6 @@ import java.util.Queue;
 public class Graph {
     // Node => [Edge1, Edge2, Edge3 . . ., EdgeN]
     private HashMap<Node, List<Edge>> graph;
-    private Node startNode;
 
     Graph() {
         this.graph = new HashMap<>();
