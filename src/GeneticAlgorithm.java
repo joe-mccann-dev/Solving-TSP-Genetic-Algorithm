@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class GeneticAlgorithm {
 
@@ -14,7 +17,21 @@ public class GeneticAlgorithm {
         this.mutationRate = mutationRate;
     }
 
-    public List<Object> perform() {
-        return null;
+    public void perform() {
+        System.out.println(generatePopulation());
+    }
+
+    // create N permutations of genomes
+    private List<List<Node>> generatePopulation() {
+        List<List<Node>> result = new ArrayList<>();
+        List<Node> nodes = graph.getNodes();
+
+        for (int i = 0; i < populationSize; i++) {
+            List<Node> copy = new ArrayList<>(nodes);
+            Collections.shuffle(copy, new Random());
+            result.add(copy);
+        }
+
+        return result;
     }
 }
