@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class App {
     public static void main(String[] args) throws Exception {
         // Initialize Graph graph
@@ -58,13 +60,18 @@ public class App {
         graph.addEdge(G, H);
         graph.addEdge(G, I);
         graph.addEdge(G, J);
+        graph.addEdge(H, I);
         graph.addEdge(H, J);
         graph.addEdge(I, J);
 
         System.out.println(graph);
 
-        // Initialize GeneticAlgorithm as gaTSP,
-        // Find optimal path and path cost by calling gaTSP.exec();
+        int pathCost = graph.getPathCost(Arrays.asList(A, B, C, D, E, F, G, H, I, J));
+        System.out.println("Path cost: " + pathCost);
+
+        // Initialize GeneticAlgorithm
+        GeneticAlgorithm ga_TSP = new GeneticAlgorithm(graph, 100, 7, 0.1f);
+        ga_TSP.perform();
 
         // output a text file indicating shortest path
         // Ex:

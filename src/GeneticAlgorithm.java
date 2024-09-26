@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class GeneticAlgorithm {
 
     private int generations;
@@ -10,5 +12,9 @@ public class GeneticAlgorithm {
         this.generations = generations;
         this.populationSize = populationSize;
         this.mutationRate = mutationRate;
+    }
+
+    public List<Object> perform() {
+        return null;
     }
 }

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Graph {
     // Node => [Edge1, Edge2, Edge3 . . ., EdgeN]
@@ -31,5 +33,33 @@ public class Graph {
 
     public List<Edge> getEdges(Node node) {
         return graph.getOrDefault(node, new ArrayList<>());
+    }
+
+    // Python example uses a String but I setup using node objects, so I process
+    // them in a queue
+    public int getPathCost(List<Node> nodes) {
+        int pathCost = 0;
+        Queue<Node> nodeQueue = new LinkedList<Node>(nodes);
+
+        Node currentNode = nodeQueue.poll();
+        while (!nodeQueue.isEmpty()) {
+            Node nextNode = nodeQueue.poll();
+            List<Edge> nodeEdges = this.getEdges(currentNode);
+            Edge edge = findEdge(nodeEdges, nextNode);
+            if (edge != null) {
+                pathCost += edge.getWeight();
+            }
+        }
+
+        return pathCost;
+    }
+
+    private Edge findEdge(List<Edge> edges, Node targetNode) {
+        for (Edge edge : edges) {
+            if (edge.getDest().equals(targetNode)) {
+                return edge;
+            }
+        }
+        return null;
     }
 }
