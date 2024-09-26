@@ -8,16 +8,16 @@ public class App {
         Graph graph = new Graph(new HashMap<>());
 
         // Create Node objects with given x and y coordinates
-        Node A = new Node(100, 300);
-        Node B = new Node(200, 130);
-        Node C = new Node(300, 500);
-        Node D = new Node(500, 390);
-        Node E = new Node(700, 300);
-        Node F = new Node(900, 600);
-        Node G = new Node(800, 950);
-        Node H = new Node(600, 560);
-        Node I = new Node(350, 550);
-        Node J = new Node(270, 350);
+        Node A = new Node(100, 300, "A");
+        Node B = new Node(200, 130, "B");
+        Node C = new Node(300, 500, "C");
+        Node D = new Node(500, 390, "D");
+        Node E = new Node(700, 300, "E");
+        Node F = new Node(900, 600, "F");
+        Node G = new Node(800, 950, "G");
+        Node H = new Node(600, 560, "H");
+        Node I = new Node(350, 550, "I");
+        Node J = new Node(270, 350, "J");
 
         // Add edges, weights calculated internally in Edge class
         // Objects.equals and Objects.hashCode overridden to ensure bidirectionality
