@@ -8,11 +8,11 @@ public class GeneticAlgorithm {
 
     private int generations;
     private int populationSize;
-    private float mutationRate;
+    private double mutationRate;
     private Graph graph;
     private Node startNode;
 
-    GeneticAlgorithm(Graph graph, int generations, int populationSize, float mutationRate) {
+    GeneticAlgorithm(Graph graph, int generations, int populationSize, double mutationRate) {
         this.graph = graph;
         this.generations = generations;
         this.populationSize = populationSize;
@@ -48,28 +48,51 @@ public class GeneticAlgorithm {
                     population.get(minPathCostIndex), pathCosts.get(minPathCostIndex)));
 
             // Begin Selection Process using Roulette Selection
-            for (int g = 0; g < populationSize; g++) {
+            for (int _genomeIndex = 0; _genomeIndex < populationSize; _genomeIndex++) {
                 List<Node> parent1 = this.rouletteSelection(population, pathCosts);
                 List<Node> parent2 = this.rouletteSelection(population, pathCosts);
                 List<Node> offspring = this.recombination(parent1, parent2);
-                System.out.println("parent1: " + parent1);
-                System.out.println("parent2: " + parent2);
-                System.out.println("offspring: " + offspring);
+                // System.out.println("parent1: " + parent1);
+                // System.out.println("parent2: " + parent2);
+                // System.out.println("offspring: " + offspring);
                 newPopulation.add(offspring);
             }
 
+            // perform mutations, update new population
+            for (int genomeIndex = 0; genomeIndex < newPopulation.size(); genomeIndex++) {
+                List<Node> currentGenome = newPopulation.get(genomeIndex);
+                List<Node> mutatedGenome = this.mutate(currentGenome);
+                newPopulation.set(genomeIndex, mutatedGenome);
+            }
+
+            population = newPopulation;
+
+            if (this.isConverged(population)) {
+                System.out.println("Algorithm has converged.");
+                break;
+            }
         }
     }
 
+    private List<Integer> determinePathCosts(List<List<Node>> population) {
+        List<Integer> result = new ArrayList<>();
+        for (List<Node> path : population) {
+            int cost = this.graph.getPathCost(path);
+            result.add(cost);
+        }
+        return result;
+    }
+
+    // use inverse of cost to ensure a lower cost path is considered more fit
+    // calculate inverse of each cost,
+    // then sum so probability using an inverse scales properly
+    // https://www.baeldung.com/cs/genetic-algorithms-roulette-selection
     private List<Node> rouletteSelection(List<List<Node>> population, List<Integer> pathCosts) {
 
         double randomValue = new Random().nextDouble();
         double probabilitiesSum = 0;
         int indexToSelect = -1;
 
-        // use inverse of cost to ensure a lower cost path is considered more fit
-        // calculate inverse of each cost,
-        // then sum so probability using an inverse scales properly
         for (int i = 0; i < pathCosts.size(); i++) {
             double cost = pathCosts.get(i);
             double sumOfInversePathCosts = pathCosts.stream().mapToDouble((c) -> 1.0 / c).sum();
@@ -91,7 +114,54 @@ public class GeneticAlgorithm {
         int separatorIndex = new Random().nextInt(parent1.size());
         offspring.addAll(parent1.subList(0, separatorIndex));
         offspring.addAll(parent2.subList(separatorIndex, parent2.size()));
+        if (offspring.stream().anyMatch(g -> g.name.equals(g.name))) {
+            System.out.println("Duplicate allele found");
+        }
         return offspring;
+    }
+
+    // only mutate if random generated double is less than mutationRate
+    private List<Node> mutate(List<Node> currentGenome) {
+        if (new Random().nextDouble() < mutationRate) {
+            int[] indices = this.computeIndicesToSwap(currentGenome);
+            // perform swap
+            currentGenome = this.swap(currentGenome, indices[0], indices[1]);
+
+        }
+        return currentGenome;
+    }
+
+    private int[] computeIndicesToSwap(List<Node> currentGenome) {
+        int[] indices = new int[2];
+        int genomeLength = currentGenome.size();
+        int left = this.getRandomInt(0, genomeLength);
+        int right = this.getRandomInt(left, genomeLength);
+        while (right - left > (genomeLength / 2)) {
+            left = this.getRandomInt(0, genomeLength);
+            right = this.getRandomInt(left, genomeLength);
+        }
+        indices[0] = left;
+        indices[1] = right;
+        return indices;
+    }
+
+    // min inclusive, max exclusive
+    private int getRandomInt(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
+    }
+
+    private List<Node> swap(List<Node> currentGenome, int left, int right) {
+        Node leftAllele = currentGenome.get(left);
+        Node rightAllele = currentGenome.get(right);
+        Node temp = leftAllele;
+        currentGenome.set(left, rightAllele);
+        currentGenome.set(right, temp);
+        return currentGenome;
+    }
+
+    private boolean isConverged(List<List<Node>> population) {
+        return population.stream().allMatch(genome -> genome.equals(population.get(0)));
     }
 
     // create N permutations of genomes
@@ -110,14 +180,4 @@ public class GeneticAlgorithm {
         }
         return result;
     }
-
-    private List<Integer> determinePathCosts(List<List<Node>> population) {
-        List<Integer> result = new ArrayList<>();
-        for (List<Node> path : population) {
-            int cost = this.graph.getPathCost(path);
-            result.add(cost);
-        }
-        return result;
-    }
-
 }

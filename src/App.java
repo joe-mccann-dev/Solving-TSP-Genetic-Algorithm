@@ -4,6 +4,8 @@ public class App {
         Graph graph = new Graph();
 
         // Create Node objects with given x and y coordinates
+        // Desmos graph with coords divided by 10:
+        // https://www.desmos.com/calculator/7pa6xcpo2j
         Node A = new Node(100, 300, "A");
         Node B = new Node(200, 130, "B");
         Node C = new Node(300, 500, "C");
@@ -73,7 +75,7 @@ public class App {
         System.out.println(graph.getNodes());
 
         // Initialize GeneticAlgorithm
-        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 5, 7, 0.1f);
+        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 5, 7, 0.1);
         gaTSP.setStartNode("A");
         gaTSP.findOptimalPath();
 
