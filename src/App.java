@@ -75,7 +75,7 @@ public class App {
         System.out.println(graph.getNodes());
 
         // Initialize GeneticAlgorithm
-        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 5, 7, 0.1);
+        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 20, 7, 0.2);
         gaTSP.setStartNode("A");
         gaTSP.findOptimalPath();
 

@@ -111,12 +111,37 @@ public class GeneticAlgorithm {
     // https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
     private List<Node> recombination(List<Node> parent1, List<Node> parent2) {
         List<Node> offspring = new ArrayList<>();
-        int separatorIndex = new Random().nextInt(parent1.size());
-        offspring.addAll(parent1.subList(0, separatorIndex));
-        offspring.addAll(parent2.subList(separatorIndex, parent2.size()));
-        if (offspring.stream().anyMatch(g -> g.name.equals(g.name))) {
-            System.out.println("Duplicate allele found");
+        for (int i = 0; i < parent1.size(); i++) {
+            offspring.add(new Node());
         }
+
+        int[] indices = this.computeIndicesToSwap(parent1);
+        int left = indices[0];
+        int right = indices[1];
+
+        for (int i = left; i < right; i++) {
+            offspring.set(i, parent1.get(i));
+        }
+        List<Integer> availableIndices = new ArrayList<>();
+        for (int i = 0; i < left; i++) {
+            availableIndices.add(i);
+        }
+        for (int i = right; i < parent1.size(); i++) {
+            availableIndices.add(i);
+        }
+
+        for (Node node : parent2) {
+            if (!offspring.stream().anyMatch(n -> n.name.equals("-1"))) {
+                break;
+            }
+            if (!availableIndices.isEmpty()) {
+                if (!offspring.contains(node)) {
+                    int selectedIndex = availableIndices.remove(0);
+                    offspring.set(selectedIndex, node);
+                }
+            }
+        }
+
         return offspring;
     }
 
