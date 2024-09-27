@@ -19,16 +19,13 @@ public class GeneticAlgorithm {
         this.mutationRate = mutationRate;
     }
 
-    // > sum_of_fitness = 0
+    public void setStartNode(String name) {
+        this.startNode = this.graph.getNodeByName(name);
+    }
 
-    // > for each genome in population:
-    // calculate its fitness with a Fitness Function
-    // sum_of_fitness += genome_fitness
-
-    // > for each genome in population:
-    // probability = genome_fitness/sum_of_fitness
-
-    // > choose a random genome with the calculated probabilities
+    public Node getStartNode() {
+        return this.startNode;
+    }
 
     public void findOptimalPath() {
         List<List<Node>> population = this.createPopulation(this.getStartNode());
@@ -50,15 +47,51 @@ public class GeneticAlgorithm {
             System.out.println(String.format("Route with smallest travel cost: %s: %d",
                     population.get(minPathCostIndex), pathCosts.get(minPathCostIndex)));
 
+            // Begin Selection Process using Roulette Selection
+            for (int g = 0; g < populationSize; g++) {
+                List<Node> parent1 = this.rouletteSelection(population, pathCosts);
+                List<Node> parent2 = this.rouletteSelection(population, pathCosts);
+                List<Node> offspring = this.recombination(parent1, parent2);
+                System.out.println("parent1: " + parent1);
+                System.out.println("parent2: " + parent2);
+                System.out.println("offspring: " + offspring);
+                newPopulation.add(offspring);
+            }
+
         }
     }
 
-    public void setStartNode(String name) {
-        this.startNode = this.graph.getNodeByName(name);
+    private List<Node> rouletteSelection(List<List<Node>> population, List<Integer> pathCosts) {
+
+        double randomValue = new Random().nextDouble();
+        double probabilitiesSum = 0;
+        int indexToSelect = -1;
+
+        // use inverse of cost to ensure a lower cost path is considered more fit
+        // calculate inverse of each cost,
+        // then sum so probability using an inverse scales properly
+        for (int i = 0; i < pathCosts.size(); i++) {
+            double cost = pathCosts.get(i);
+            double sumOfInversePathCosts = pathCosts.stream().mapToDouble((c) -> 1.0 / c).sum();
+            double probability = (1.0 / cost) / (sumOfInversePathCosts);
+            probabilitiesSum += probability;
+
+            if (probabilitiesSum >= randomValue) {
+                indexToSelect = i;
+                break;
+            }
+        }
+        return population.get(indexToSelect);
     }
 
-    public Node getStartNode() {
-        return this.startNode;
+    // use single point crossover (recombination)
+    // https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
+    private List<Node> recombination(List<Node> parent1, List<Node> parent2) {
+        List<Node> offspring = new ArrayList<>();
+        int separatorIndex = new Random().nextInt(parent1.size());
+        offspring.addAll(parent1.subList(0, separatorIndex));
+        offspring.addAll(parent2.subList(separatorIndex, parent2.size()));
+        return offspring;
     }
 
     // create N permutations of genomes
@@ -86,4 +119,5 @@ public class GeneticAlgorithm {
         }
         return result;
     }
+
 }
