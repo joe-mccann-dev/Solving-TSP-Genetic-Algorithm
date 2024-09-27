@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class App {
     public static void main(String[] args) throws Exception {
         // Initialize Graph graph
@@ -65,23 +63,19 @@ public class App {
         graph.addEdge(H, J);
         graph.addEdge(I, J);
 
-        System.out.println(graph);
+        // int pathCost = graph.getPathCost(Arrays.asList(A, B, C, D, E, F, G, H, I,
+        // J));
+        // System.out.println("Path cost forwards: " + pathCost);
 
-        int pathCost = graph.getPathCost(Arrays.asList(A, B, C, D, E, F, G, H, I, J));
-        System.out.println("Path cost forwards: " + pathCost);
-
-        pathCost = graph.getPathCost(Arrays.asList(J, I, H, G, F, E, D, C, B, A));
-        System.out.println("Path cost backwards: " + pathCost);
+        // pathCost = graph.getPathCost(Arrays.asList(J, I, H, G, F, E, D, C, B, A));
+        // System.out.println("Path cost backwards: " + pathCost);
 
         System.out.println(graph.getNodes());
 
         // Initialize GeneticAlgorithm
-        GeneticAlgorithm ga_TSP = new GeneticAlgorithm(graph, 100, 7, 0.1f);
-        ga_TSP.setStartNode("A");
-        ga_TSP.perform();
-
-        System.out
-                .println("Path cost first perm: " + graph.getPathCost(Arrays.asList(A, G, H, I, J, C, F, E, D, B, A)));
+        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 5, 7, 0.1f);
+        gaTSP.setStartNode("A");
+        gaTSP.findOptimalPath();
 
         // output a text file indicating shortest path
         // Ex:
