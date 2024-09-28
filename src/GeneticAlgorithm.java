@@ -126,14 +126,14 @@ public class GeneticAlgorithm {
         return population.get(indexToSelect);
     }
 
-    // use single point crossover (recombination)
+    // using two-point crossover
     // https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
     private List<Node> recombination(List<Node> parent1, List<Node> parent2) {
-        List<Node> offspring = new ArrayList<>();
-        Node nodeA = parent1.get(0);
-        for (int i = 0; i < parent1.size(); i++) {
-            offspring.add(new Node());
-        }
+        List<Node> offspring = new ArrayList<>(Collections.nCopies(parent1.size(), null));
+
+        Node startNode = parent1.get(0);
+        offspring.set(0, startNode);
+        offspring.set(offspring.size() - 1, startNode);
 
         int[] indices = this.computeIndicesToSwap(parent1);
         int left = indices[0];
@@ -142,38 +142,24 @@ public class GeneticAlgorithm {
         for (int i = left; i < right; i++) {
             offspring.set(i, parent1.get(i));
         }
+
         List<Integer> availableIndices = new ArrayList<>();
-        for (int i = 0; i < left; i++) {
-            if (offspring.get(i).name.equals("-1")) {
+        for (int i = 1; i < offspring.size() - 1; i++) {
+            if (offspring.get(i) == null) {
                 availableIndices.add(i);
             }
 
         }
-        for (int i = right; i < parent1.size(); i++) {
-            availableIndices.add(i);
-        }
-
-        // System.out.println("Offspring before crossover: " + offspring);
-        // System.out.println("Available indices: " + availableIndices);
 
         for (Node node : parent2) {
-            if (!offspring.stream().anyMatch(n -> n.name.equals("-1"))) {
-                break;
-            }
-
             if (!offspring.contains(node)) {
                 int selectedIndex = availableIndices.remove(0);
                 offspring.set(selectedIndex, node);
             }
 
-        }
-
-        if (!offspring.get(0).equals(nodeA)) {
-            offspring.set(0, nodeA);
-        }
-
-        if (!offspring.get(parent1.size() - 1).equals(nodeA)) {
-            offspring.set(parent1.size() - 1, nodeA);
+            if (availableIndices.isEmpty()) {
+                break;
+            }
         }
 
         return offspring;
