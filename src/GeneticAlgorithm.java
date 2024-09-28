@@ -11,12 +11,12 @@ public class GeneticAlgorithm {
     private double mutationRate;
     private Graph graph;
     private Node startNode;
+    private double elitismRate;
 
     GeneticAlgorithm(Graph graph, int generations, int populationSize, double mutationRate) {
         this.graph = graph;
         this.generations = generations;
         this.populationSize = populationSize;
-        this.mutationRate = mutationRate;
     }
 
     public void setStartNode(String name) {
@@ -29,6 +29,7 @@ public class GeneticAlgorithm {
 
     public void findOptimalPath() {
         List<List<Node>> population = this.createPopulation(this.getStartNode());
+
         for (int i = 0; i < generations; i++) {
             System.out.println("\nGeneration: " + (i + 1));
             System.out.println("Randomized paths: " + population);
@@ -147,6 +148,10 @@ public class GeneticAlgorithm {
                 offspring.set(selectedIndex, node);
             }
 
+        }
+
+        if (!offspring.get(0).equals(nodeA)) {
+            offspring.set(0, nodeA);
         }
 
         if (!offspring.get(parent1.size() - 1).equals(nodeA)) {
