@@ -59,8 +59,7 @@ public class Graph {
         return result;
     }
 
-    // Python example uses a String but I setup using node objects, so I process
-    // them in a queue
+    // Process node objects in a queue.
     public int getPathCost(List<Node> nodes) {
         int pathCost = 0;
         Queue<Node> nodeQueue = new LinkedList<Node>(nodes);
