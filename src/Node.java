@@ -10,12 +10,6 @@ public class Node {
         this.y = y;
     }
 
-    Node() {
-        this.name = "-1";
-        this.x = Integer.MAX_VALUE;
-        this.y = Integer.MAX_VALUE;
-    }
-
     public String toString() {
         return this.name;
     }
