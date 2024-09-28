@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -13,10 +14,11 @@ public class GeneticAlgorithm {
     private Node startNode;
     private double elitismRate;
 
-    GeneticAlgorithm(Graph graph, int generations, int populationSize, double mutationRate) {
+    GeneticAlgorithm(Graph graph, int generations, int populationSize, double mutationRate, double elitismRate) {
         this.graph = graph;
         this.generations = generations;
         this.populationSize = populationSize;
+        this.elitismRate = elitismRate;
     }
 
     public void setStartNode(String name) {
@@ -34,6 +36,8 @@ public class GeneticAlgorithm {
             System.out.println("\nGeneration: " + (i + 1));
             System.out.println("Randomized paths: " + population);
 
+            int elitismOffset = (int) Math.ceil(populationSize * this.elitismRate);
+
             List<List<Node>> newPopulation = new ArrayList<>();
 
             // create an array of path costs, smaller cost is better
@@ -48,8 +52,18 @@ public class GeneticAlgorithm {
             System.out.println(String.format("Route with smallest travel cost: %s: %d",
                     population.get(minPathCostIndex), pathCosts.get(minPathCostIndex)));
 
+            Collections.sort(pathCosts);
+            population.sort(Comparator.comparingInt(path -> graph.getPathCost(path)));
+            // System.out.println("Population sorted: " + population);
+            // System.out.println("PATH COSTS SORTED: " + pathCosts);
+            for (int j = 0; j < elitismOffset; j++) {
+                newPopulation.add(population.get(j));
+            }
+
+            System.out.println("New population with elites: " + newPopulation);
+
             // Begin Selection Process using Roulette Selection
-            for (int _genomeIndex = 0; _genomeIndex < populationSize; _genomeIndex++) {
+            for (int _genomeIndex = elitismOffset; _genomeIndex < this.populationSize; _genomeIndex++) {
                 List<Node> parent1 = this.rouletteSelection(population, pathCosts);
                 List<Node> parent2 = this.rouletteSelection(population, pathCosts);
                 List<Node> offspring = this.recombination(parent1, parent2);
