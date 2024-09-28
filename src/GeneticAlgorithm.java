@@ -36,8 +36,6 @@ public class GeneticAlgorithm {
             System.out.println("\nGeneration: " + (i + 1));
             System.out.println("Randomized paths: " + population);
 
-            // int elitismOffset = (int) Math.ceil(populationSize * this.elitismRate);
-
             List<List<Node>> newPopulation = new ArrayList<>();
 
             // create an array of path costs, smaller cost is better
@@ -55,8 +53,6 @@ public class GeneticAlgorithm {
             // preparing for Elitism setup
             Collections.sort(pathCosts);
             population.sort(Comparator.comparingInt(path -> graph.getPathCost(path)));
-            // System.out.println("Population sorted: " + population);
-            // System.out.println("PATH COSTS SORTED: " + pathCosts);
             for (int j = 0; j < this.elitismRate; j++) {
                 newPopulation.add(population.get(j));
             }

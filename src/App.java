@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class App {
     public static void main(String[] args) throws Exception {
         // Initialize Graph graph
@@ -67,23 +65,12 @@ public class App {
         graph.addEdge(H, J);
         graph.addEdge(I, J);
 
-        int pathCost = graph.getPathCost(Arrays.asList(A, B, C, D, J, I, H, G, F, E, A));
-        System.out.println("Path cost forwards: " + pathCost);
-
-        // pathCost = graph.getPathCost(Arrays.asList(J, I, H, G, F, E, D, C, B, A));
-        // System.out.println("Path cost backwards: " + pathCost);
-
-        System.out.println(graph.getNodes());
+        System.out.println("Graph contains the following nodes: " + graph.getNodes());
 
         // Initialize GeneticAlgorithm
-        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 100, 30, 0.1, 2);
+        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 500, 50, 0.2, 2);
         gaTSP.setStartNode("A");
         gaTSP.findOptimalPath();
 
-        // output a text file indicating shortest path
-        // Ex:
-        // Shortest distance value: 3961.67 miles
-        // Sequence order of 10 cities: A -> B -> J -> C -> I -> D -> H -> G -> F -> E
-        // -> A
     }
 }
