@@ -70,6 +70,9 @@ public class GeneticAlgorithm {
 
             if (this.isConverged(population)) {
                 System.out.println("Algorithm has converged.");
+                List<Node> path = population.get(0);
+                System.out.println("Path cost: " + graph.getPathCost(path));
+                System.out.println("Path determined: " + path);
                 break;
             }
         }

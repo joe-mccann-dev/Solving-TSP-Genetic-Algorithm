@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class App {
     public static void main(String[] args) throws Exception {
         // Initialize Graph graph
@@ -65,9 +67,8 @@ public class App {
         graph.addEdge(H, J);
         graph.addEdge(I, J);
 
-        // int pathCost = graph.getPathCost(Arrays.asList(A, B, C, D, E, F, G, H, I,
-        // J));
-        // System.out.println("Path cost forwards: " + pathCost);
+        int pathCost = graph.getPathCost(Arrays.asList(A, B, C, D, J, I, H, G, F, E, A));
+        System.out.println("Path cost forwards: " + pathCost);
 
         // pathCost = graph.getPathCost(Arrays.asList(J, I, H, G, F, E, D, C, B, A));
         // System.out.println("Path cost backwards: " + pathCost);
@@ -75,7 +76,7 @@ public class App {
         System.out.println(graph.getNodes());
 
         // Initialize GeneticAlgorithm
-        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 200, 7, 0.2);
+        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 200, 10, 0.2);
         gaTSP.setStartNode("A");
         gaTSP.findOptimalPath();
 
