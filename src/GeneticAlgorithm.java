@@ -12,9 +12,9 @@ public class GeneticAlgorithm {
     private double mutationRate;
     private Graph graph;
     private Node startNode;
-    private double elitismRate;
+    private int elitismRate;
 
-    GeneticAlgorithm(Graph graph, int generations, int populationSize, double mutationRate, double elitismRate) {
+    GeneticAlgorithm(Graph graph, int generations, int populationSize, double mutationRate, int elitismRate) {
         this.graph = graph;
         this.generations = generations;
         this.populationSize = populationSize;
@@ -36,7 +36,7 @@ public class GeneticAlgorithm {
             System.out.println("\nGeneration: " + (i + 1));
             System.out.println("Randomized paths: " + population);
 
-            int elitismOffset = (int) Math.ceil(populationSize * this.elitismRate);
+            // int elitismOffset = (int) Math.ceil(populationSize * this.elitismRate);
 
             List<List<Node>> newPopulation = new ArrayList<>();
 
@@ -57,14 +57,14 @@ public class GeneticAlgorithm {
             population.sort(Comparator.comparingInt(path -> graph.getPathCost(path)));
             // System.out.println("Population sorted: " + population);
             // System.out.println("PATH COSTS SORTED: " + pathCosts);
-            for (int j = 0; j < elitismOffset; j++) {
+            for (int j = 0; j < this.elitismRate; j++) {
                 newPopulation.add(population.get(j));
             }
 
             System.out.println("New population with elites: " + newPopulation);
 
             // Begin Selection Process using Roulette Selection
-            for (int _genomeIndex = elitismOffset; _genomeIndex < this.populationSize; _genomeIndex++) {
+            for (int _genomeIndex = this.elitismRate; _genomeIndex < this.populationSize; _genomeIndex++) {
                 List<Node> parent1 = this.rouletteSelection(population, pathCosts);
                 List<Node> parent2 = this.rouletteSelection(population, pathCosts);
                 List<Node> offspring = this.recombination(parent1, parent2);
