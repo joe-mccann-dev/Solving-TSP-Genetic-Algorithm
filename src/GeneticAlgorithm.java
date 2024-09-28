@@ -52,6 +52,7 @@ public class GeneticAlgorithm {
             System.out.println(String.format("Route with smallest travel cost: %s: %d",
                     population.get(minPathCostIndex), pathCosts.get(minPathCostIndex)));
 
+            // preparing for Elitism setup
             Collections.sort(pathCosts);
             population.sort(Comparator.comparingInt(path -> graph.getPathCost(path)));
             // System.out.println("Population sorted: " + population);
@@ -83,7 +84,7 @@ public class GeneticAlgorithm {
             population = newPopulation;
 
             if (this.isConverged(population)) {
-                System.out.println("Algorithm has converged.");
+                System.out.println("\nAlgorithm has converged.");
                 List<Node> path = population.get(0);
                 System.out.println("Path cost: " + graph.getPathCost(path));
                 System.out.println("Path determined: " + path);
