@@ -16,7 +16,7 @@ public class Graph {
         StringBuilder sb = new StringBuilder();
         List<Node> nodes = new ArrayList<>(this.graph.keySet());
         for (Node node : nodes) {
-            System.out.println("\nNode " + node + ": " + this.getEdges(node));
+            sb.append("\nNode " + node + ": " + this.getEdges(node));
         }
 
         return sb.toString();

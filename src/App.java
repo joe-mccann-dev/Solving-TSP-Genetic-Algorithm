@@ -68,7 +68,7 @@ public class App {
         System.out.println("Graph contains the following nodes: " + graph.getNodes());
 
         // Initialize GeneticAlgorithm
-        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 500, 50, 0.2, 2);
+        GeneticAlgorithm gaTSP = new GeneticAlgorithm(graph, 500, 50, 0.1, 2);
         gaTSP.setStartNode("A");
         gaTSP.findOptimalPath();
 

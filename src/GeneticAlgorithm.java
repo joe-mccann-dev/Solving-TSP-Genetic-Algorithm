@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GeneticAlgorithm {
@@ -19,6 +20,10 @@ public class GeneticAlgorithm {
         this.generations = generations;
         this.populationSize = populationSize;
         this.elitismRate = elitismRate;
+    }
+
+    public Graph getGraph() {
+        return this.graph;
     }
 
     public void setStartNode(String name) {
@@ -64,9 +69,9 @@ public class GeneticAlgorithm {
                 List<Node> parent1 = this.rouletteSelection(population, pathCosts);
                 List<Node> parent2 = this.rouletteSelection(population, pathCosts);
                 List<Node> offspring = this.recombination(parent1, parent2);
-                System.out.println("parent1: " + parent1);
-                System.out.println("parent2: " + parent2);
-                System.out.println("offspring: " + offspring);
+                // System.out.println("parent1: " + parent1);
+                // System.out.println("parent2: " + parent2);
+                // System.out.println("offspring: " + offspring);
                 newPopulation.add(offspring);
             }
 
@@ -85,17 +90,13 @@ public class GeneticAlgorithm {
                 System.out.println("Path cost: " + graph.getPathCost(path));
                 System.out.println("Path determined: " + path);
                 break;
+
             }
         }
     }
 
     private List<Integer> determinePathCosts(List<List<Node>> population) {
-        List<Integer> result = new ArrayList<>();
-        for (List<Node> path : population) {
-            int cost = this.graph.getPathCost(path);
-            result.add(cost);
-        }
-        return result;
+        return population.stream().map(nodeList -> this.graph.getPathCost(nodeList)).collect(Collectors.toList());
     }
 
     // use inverse of cost to ensure a lower cost path is considered more fit
@@ -167,7 +168,6 @@ public class GeneticAlgorithm {
             int[] indices = this.computeIndicesToSwap(currentGenome);
             // perform swap
             currentGenome = this.swap(currentGenome, indices[0], indices[1]);
-
         }
         return currentGenome;
     }
