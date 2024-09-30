@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class GeneticAlgorithm {
 
@@ -37,41 +36,30 @@ public class GeneticAlgorithm {
     public void findOptimalPath() {
         List<List<Node>> population = this.createPopulation(this.getStartNode());
 
-        for (int i = 0; i < generations; i++) {
-            System.out.println("\nGeneration: " + (i + 1));
-            System.out.println("Randomized paths: " + population);
+        System.out.println("Performing genetic algorithm on input population of size " + this.populationSize);
+
+        for (int generationIndex = 0; generationIndex < generations; generationIndex++) {
+            // System.out.println("\nGeneration: " + (i + 1));
+            // System.out.println("Randomized paths: " + population);
 
             List<List<Node>> newPopulation = new ArrayList<>();
 
             // create an array of path costs, smaller cost is better
             List<Integer> pathCosts = this.determinePathCosts(population);
-            System.out.println("\nCost for each path: " + pathCosts);
-
-            // find minimum path cost index
-            int minPathCostIndex = IntStream.range(0, pathCosts.size())
-                    .reduce((c1, c2) -> pathCosts.get(c1) < pathCosts.get(c2) ? c1 : c2)
-                    .orElse(-1);
-
-            System.out.println(String.format("Route with smallest travel cost: %s: %d",
-                    population.get(minPathCostIndex), pathCosts.get(minPathCostIndex)));
 
             // preparing for Elitism setup
             Collections.sort(pathCosts);
             population.sort(Comparator.comparingInt(path -> graph.getPathCost(path)));
-            for (int j = 0; j < this.elitismRate; j++) {
-                newPopulation.add(population.get(j));
+            for (int eliteIndex = 0; eliteIndex < this.elitismRate; eliteIndex++) {
+                newPopulation.add(population.get(eliteIndex));
             }
-
-            System.out.println("New population with elites: " + newPopulation);
 
             // Begin Selection Process using Roulette Selection
             for (int _genomeIndex = this.elitismRate; _genomeIndex < this.populationSize; _genomeIndex++) {
                 List<Node> parent1 = this.rouletteSelection(population, pathCosts);
                 List<Node> parent2 = this.rouletteSelection(population, pathCosts);
                 List<Node> offspring = this.recombination(parent1, parent2);
-                // System.out.println("parent1: " + parent1);
-                // System.out.println("parent2: " + parent2);
-                // System.out.println("offspring: " + offspring);
+
                 newPopulation.add(offspring);
             }
 
@@ -85,14 +73,20 @@ public class GeneticAlgorithm {
             population = newPopulation;
 
             if (this.isConverged(population)) {
-                System.out.println("\nAlgorithm has converged.");
+                String convergenceMessage = "\nAlgorithm has converged to an approximate solution after %d generations.";
+                System.out.println(String.format(convergenceMessage, (generationIndex + 1)));
                 List<Node> path = population.get(0);
-                System.out.println("Path cost: " + graph.getPathCost(path));
-                System.out.println("Path determined: " + path);
+                this.printPath(path);
                 break;
 
             }
         }
+
+    }
+
+    private void printPath(List<Node> path) {
+        System.out.println("Path cost: " + graph.getPathCost(path));
+        System.out.println("Path determined: " + path + "\n");
     }
 
     private List<Integer> determinePathCosts(List<List<Node>> population) {
